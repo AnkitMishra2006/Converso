@@ -4,19 +4,24 @@ import React from "react";
 import NavItems from "./NavItems";
 
 function Navbar() {
-    return (
-        <nav className="navbar">
-            <Link href="/">
-                <div className="flex items-center gap-2.5 cursor-pointer">
-                    <Image src="/images/logo.svg" alt="logo" width={46} height={44}></Image>
-                    <div className="flex items-center gap-8 ">
-                        <NavItems />
-                        <p> Sign In</p>
-                    </div>
-                </div>
-            </Link>
-        </nav >
-    );
+  return (
+    <nav className="navbar">
+      <Link href="/">
+        <div className="flex items-center gap-2.5 cursor-pointer">
+          <Image
+            src="/images/logo.svg"
+            alt="logo"
+            width={46}
+            height={44}
+          ></Image>
+        </div>
+      </Link>
+      <div className="flex items-center gap-8 ">
+        <NavItems />
+        <p> Sign In</p>
+      </div>
+    </nav>
+  );
 }
 
 export default Navbar;
