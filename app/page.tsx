@@ -15,7 +15,7 @@ const Page = () => {
           topic="Topic One"
           subject="Subject One"
           duration={30}
-          color="#f0f0f0"
+          color="#ffda6e"
           bookmarked={false}
         />
         <CompanionCard
@@ -24,7 +24,7 @@ const Page = () => {
           topic="Topic One"
           subject="Subject One"
           duration={30}
-          color="#f0f0f0"
+          color="#e5d0ff"
           bookmarked={false}
         />
         <CompanionCard
@@ -33,16 +33,16 @@ const Page = () => {
           topic="Topic One"
           subject="Subject One"
           duration={30}
-          color="#f0f0f0"
+          color="#bde7ff"
           bookmarked={false}
         />
       </section>
 
-      <section className="home-section">
+      <section className="home-section mb-5">
         <CompanionsList
           title="Recent Completed Sessions"
           companions={recentSessions}
-          classNames = "w-2/3 max-lg:w-full"
+          classNames="w-2/3 max-lg:w-full"
         />
         <CTA />
       </section>
