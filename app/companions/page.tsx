@@ -9,11 +9,8 @@ async function page({ searchParams }: SearchParams) {
   const filters = await searchParams;
   const subject = filters.subject ? filters.subject : "";
   const topic = filters.topic ? filters.topic : "";
-  console.log("CompanionsLibrary params:", filters);
 
   const companions = await getAllCompanions({ subject, topic });
-
-  console.log("CompanionsLibrary companions:", companions);
 
   return (
     <main>
