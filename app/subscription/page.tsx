@@ -1,11 +1,12 @@
-import React from 'react'
+import { PricingTable } from "@clerk/nextjs";
+import React from "react";
 
 function page() {
-    return (
-        <div>
-            Subscription
-        </div>
-    )
+  return (
+    <div>
+      <PricingTable />
+    </div>
+  );
 }
 
-export default page
+export default page;
