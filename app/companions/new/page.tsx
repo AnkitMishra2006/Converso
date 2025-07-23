@@ -1,11 +1,16 @@
-import React from 'react'
+import CompanionForm from "@/components/CompanionForm";
+import React from "react";
 
-function page() {
+const CompanionSession = () => {
   return (
-    <div>
-      NewCompanion
-    </div>
-  )
-}
+    <main>
+      <article>
+        <h1 className="mb-5">Companion Builder</h1>
 
-export default page
+        <CompanionForm />
+      </article>
+    </main>
+  );
+};
+
+export default CompanionSession;
