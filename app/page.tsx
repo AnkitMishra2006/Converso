@@ -1,33 +1,43 @@
-import React from "react";
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
+import { auth } from "@clerk/nextjs/server";
 import {
   getAllCompanions,
   getRecentSessions,
+  getBookmarkedCompanions,
 } from "@/lib/actions/companion.actions";
 import { getSubjectColor } from "@/lib/utils";
 
 const Page = async () => {
+  const { userId } = await auth();
   const companions = await getAllCompanions({ limit: 3 });
   const recentSessionsCompanions = await getRecentSessions(10);
 
+  let bookmarkedIds: string[] = [];
+  if (userId) {
+    const bookmarks = await getBookmarkedCompanions(userId);
+    bookmarkedIds = bookmarks.map((c: any) => c.id);
+  }
+
   return (
     <main>
-      <h1 className="text-2xl underline">Popular Companions</h1>
+      <h1>Popular Companions</h1>
+
       <section className="home-section">
         {companions.map((companion) => (
           <CompanionCard
-            {...companion}
             key={companion.id}
+            {...companion}
             color={getSubjectColor(companion.subject)}
+            bookmarked={bookmarkedIds.includes(companion.id)}
           />
         ))}
       </section>
 
-      <section className="home-section mb-5">
+      <section className="home-section">
         <CompanionsList
-          title="Recent Completed Sessions"
+          title="Recently completed sessions"
           companions={recentSessionsCompanions}
           classNames="w-2/3 max-lg:w-full"
         />

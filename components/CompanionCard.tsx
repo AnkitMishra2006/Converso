@@ -1,9 +1,11 @@
 "use client";
-// import { removeBookmark } from "@/lib/actions/companion.actions";
-// import { addBookmark } from "@/lib/actions/companion.actions";
+import { removeBookmark } from "@/lib/actions/companion.actions";
+import { addBookmark } from "@/lib/actions/companion.actions";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { SignedIn } from "@clerk/nextjs";
 
 interface CompanionCardProps {
   id: string;
@@ -22,31 +24,54 @@ const CompanionCard = ({
   subject,
   duration,
   color,
-  bookmarked,
+  bookmarked: initialBookmarked,
 }: CompanionCardProps) => {
   const pathname = usePathname();
-  console.log("Pathname:", pathname);
+  const [bookmarked, setBookmarked] = useState(initialBookmarked);
+  const [loading, setLoading] = useState(false);
+
   const handleBookmark = async () => {
-    //   if (bookmarked) {
-    //     await removeBookmark(id, pathname);
-    //   } else {
-    //     await addBookmark(id, pathname);
-    //   }
+    if (loading) return;
+    setLoading(true);
+    const prev = bookmarked;
+    setBookmarked(!bookmarked); // Optimistic UI update
+
+    try {
+      if (prev) {
+        await removeBookmark(id, pathname);
+      } else {
+        await addBookmark(id, pathname);
+      }
+    } catch (err) {
+      setBookmarked(prev); // Revert on error
+      // Optionally show an error message here
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <article className="companion-card" style={{ backgroundColor: color }}>
       <div className="flex justify-between items-center">
         <div className="subject-badge">{subject}</div>
-        <button className="companion-bookmark" onClick={handleBookmark}>
-          <Image
-            src={
-              bookmarked ? "/icons/bookmark-filled.svg" : "/icons/bookmark.svg"
-            }
-            alt="bookmark"
-            width={12.5}
-            height={15}
-          />
-        </button>
+
+        <SignedIn>
+          <button
+            className="companion-bookmark"
+            onClick={handleBookmark}
+            disabled={loading}
+          >
+            <Image
+              src={
+                bookmarked
+                  ? "/icons/bookmark-filled.svg"
+                  : "/icons/bookmark.svg"
+              }
+              alt="bookmark"
+              width={12.5}
+              height={15}
+            />
+          </button>
+        </SignedIn>
       </div>
 
       <h2 className="text-2xl font-bold">{name}</h2>
