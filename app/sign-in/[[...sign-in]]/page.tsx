@@ -1,11 +1,6 @@
-import { SignIn } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
-function Page() {
-  return (
-    <main className="flex items-center justify-center">
-      <SignIn />
-    </main>
-  );
+export default function Page() {
+  // No auth required — redirect to home
+  redirect("/");
 }
-
-export default Page;

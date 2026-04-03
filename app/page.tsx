@@ -1,7 +1,6 @@
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
-import { auth } from "@clerk/nextjs/server";
 import {
   getAllCompanions,
   getRecentSessions,
@@ -9,16 +8,13 @@ import {
 } from "@/lib/actions/companion.actions";
 import { getSubjectColor } from "@/lib/utils";
 
+const DEMO_USER_ID = "demo-user-portfolio";
+
 const Page = async () => {
-  const { userId } = await auth();
   const companions = await getAllCompanions({ limit: 3 });
   const recentSessionsCompanions = await getRecentSessions(10);
-
-  let bookmarkedIds: string[] = [];
-  if (userId) {
-    const bookmarks = await getBookmarkedCompanions(userId);
-    bookmarkedIds = bookmarks.map((c: any) => c.id);
-  }
+  const bookmarks = await getBookmarkedCompanions(DEMO_USER_ID);
+  const bookmarkedIds = bookmarks.map((c: any) => c.id);
 
   return (
     <main>

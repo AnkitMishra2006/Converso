@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { SignedIn } from "@clerk/nextjs";
 
 interface CompanionCardProps {
   id: string;
@@ -44,7 +43,6 @@ const CompanionCard = ({
       }
     } catch (err) {
       setBookmarked(prev); // Revert on error
-      // Optionally show an error message here
     } finally {
       setLoading(false);
     }
@@ -54,24 +52,20 @@ const CompanionCard = ({
       <div className="flex justify-between items-center">
         <div className="subject-badge">{subject}</div>
 
-        <SignedIn>
-          <button
-            className="companion-bookmark"
-            onClick={handleBookmark}
-            disabled={loading}
-          >
-            <Image
-              src={
-                bookmarked
-                  ? "/icons/bookmark-filled.svg"
-                  : "/icons/bookmark.svg"
-              }
-              alt="bookmark"
-              width={12.5}
-              height={15}
-            />
-          </button>
-        </SignedIn>
+        <button
+          className="companion-bookmark"
+          onClick={handleBookmark}
+          disabled={loading}
+        >
+          <Image
+            src={
+              bookmarked ? "/icons/bookmark-filled.svg" : "/icons/bookmark.svg"
+            }
+            alt="bookmark"
+            width={12.5}
+            height={15}
+          />
+        </button>
       </div>
 
       <h2 className="text-2xl font-bold">{name}</h2>
